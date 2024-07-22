@@ -1,0 +1,85 @@
+{% include 'header.twig' %}
+div
+    class=wrapper-content__body
+
+    !-- Main variables content --
+    div id=block_api class=pt-5 container-fluid col-lg-8 style= margin0 auto;
+        div class=block-api
+            div class=container-fluid
+                div class=row justify-content-center
+                    div class=col-lg-10
+                        div class=card
+
+                            div class=center-big-content-block
+                                h2 class=m-b-md{{lang[api.title.text]}}h2
+                                table class=table mb-3
+                                    tbody
+
+                                        tr
+                                            td class=width-40HTTP Methodtd
+                                            tdPOSTtd
+                                        tr
+                                        tr
+                                            tdAPI URLtd
+                                            td{{ site[url] }}apiv2td
+                                        tr
+                                        {% if user['auth'] %}
+                                        tr
+                                            tdAPI Keytd
+                                            td
+                                                Get an API key on the
+                                                a href={{ site[url] }}accountAccounta
+                                                pagetd
+                                        tr
+                                        {% endif %}
+                                        tr
+                                            tdReturn formattd
+                                            tdJSONtd
+                                        tr
+
+                                    tbody
+                                table
+                                {% for content in apiPageContent[apiData] %}
+                                h4 class=m-t-md
+
+                                    {{content[heading]}}
+
+                                h4
+                                div class=table-bg
+                                    div class=table-wr 
+                                        table class=table mb-3
+                                            thead
+                                                tr
+                                                    th class=width-40{{apiPageContent[parameters]}}th
+                                                    th{{apiPageContent[description]}}th
+                                                tr
+                                            thead
+                                            tbody
+                                                {% for params, desc in content[parameters] %}
+                                                tr
+                                                    td{{params}}td
+                                                    td{{desc}}td
+                                                tr
+                                                {% endfor %}
+                                            tbody
+                                        table
+                                    div
+                                div
+                                p
+                                    strong{{apiPageContent[response]}}strong
+                                p
+                                pre{{content[code]}}pre
+                                {% endfor %}
+                                a href={{ site[url] }}example.txt target=_blank
+                                    button class=btn btn-actionsExample of PHP codebutton
+                                a
+                            div
+                        div
+                    div
+                div
+            div
+        div
+    div
+div
+div
+brbr{% include 'footer.twig' %}

@@ -1,0 +1,93 @@
+{% include 'header.twig' %}
+
+
+<div id="block_254">
+    <div class="sign-in">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+
+            <div class="row sign-up-center-alignment">
+
+                <div class="col-lg-8">
+
+                    <div class="component_card">
+                        {% if errorText %}
+                        <div class="alert alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            {{ errorText }}
+                        </div>
+                        {% endif %}
+                        {% if successText %}
+                        <div class="alert alert-dismissible alert-success">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            {{ successText }}
+                        </div>
+                        {% endif %}
+                        <div class="card">
+                            <form action="" method="post" class="component_form_group component_checkbox">
+                                <div class="">
+                                    <div class="form-group">
+                                        <label for="username" class="control-label">{{ lang['signup.username'] }}</label>
+                                        <input type="text" class="form-control" id="username" name="username" value="{{ data['username'] }}">
+                                    </div>
+                                    {% if settings["register_name"] == 2 %}
+                                    <div class="form-group">
+                                        <label for="firstname" class="control-label">{{ lang['signup.name'] }}</label>
+                                        <input type="text" class="form-control" id="firstname" name="name" value="{{ data['name'] }}">
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <label for="email" class="control-label">{{ lang['signup.email'] }}</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{ data['email'] }}">
+                                    </div>
+                                    {% if settings["register_whatsapp"] == 2 %}
+                                    <div class="form-group">
+                                        <label for="skype" class="control-label">{{ lang['signup.telephone'] }}</label>
+                                        <input type="text" class="form-control" id="skype" name="telephone" value="{{ data['telephone'] }}">
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <label for="password" class="control-label">{{ lang['signup.password'] }}</label>
+                                        <input type="password" class="form-control" id="password" name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirm" class="control-label">{{ lang['signup.confirm.password'] }}</label>
+                                        <input type="password" class="form-control" id="confirm" name="password_again">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="terms" value="1">
+                                            {{ lang['signup.accept_terms_text'] }}
+                                        </label>
+                                    </div>
+                                    {% if captcha %}
+                                    <div class="form-group">
+                                        <div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+                                    </div>
+                                    {% endif %}
+                                    <input type="hidden" name="crsf_token" value="{{ csrf_token() }}">
+                                    <div class="component_button_submit">
+                                        <div class="form-group">
+                                            <div class="">
+                                                <button type="submit" class="btn btn-block btn-big-primary">{{ lang['signup.button'] }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        {{ lang['signup.already.account'] }}<a href="/" class="sign-up-center-signin-link">{{lang["signin.button"]}}</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% include 'footer.twig' %}

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <base href="{{ site['url'] }}/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    {% if meta_header %}
+    {{ meta_header }}
+    {% endif %}
+
+    {% if site['keywords'] %}
+    <meta name="keywords" content="{{ site['keywords'] }}">
+    {% endif %}
+    {% if meta_robots %}
+    <meta name="robots" content="{{ meta_robots }}">
+    {% endif %}
+    {% if site['description'] %}
+    <meta name="description" content="{{ site['description'] }}">
+    {% endif %}
+    {% if site['favicon'] %}
+    <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />
+{% endif %}
+{{ headerCode }}
+<style>
+
+
+    @media only screen and(max-width: 990px) {
+        #curr_anchor {
+            height: 40px;
+        }
+
+        .badge {
+            background-color: yellow;
+            color: black;
+        }
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            background-color: #F5F5F5;
+            z-index: 99;
+        }
+
+        #loading-image {
+            z-index: 100;
+        }
+
+
+        #loading span {
+            display: inline-block;
+            font-weight: 900;
+
+        }
+
+
+    }
+
+
+
+    .body .form-group .search-dropdown .input-wrapper {
+
+        position: relative;
+    }
+
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__prepend,
+    .form-group .search-dropdown .input-wrapper .input-wrapper__append {
+        position: absolute;
+        background: none;
+        border: none;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0 2px;
+
+    }
+
+    .body .form-group .search-results {
+        position: absolute !important;
+        max-height: 300px;
+        border-radius: 8px;
+        margin-top: 8px;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        border-color: transparent;
+        border-style: solid;
+        box-shadow: 0 12px 24px 12px rgba(0, 0, 0, 0.2);
+        overflow-y: auto !important;
+        width: calc(100% - 3.5rem);
+        background: #fff;
+        z-index: 1;
+        left: 25px;
+    }
+
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__prepend {
+        left: 10px;
+    }
+    .body .form-group .search-dropdown .input-wrapper .form-control {
+        padding-left: 35px;
+        padding-right: 10px;
+    }
+    .body .form-group .select2-selection--single {
+        display: flex;
+        align-items: center;
+    }
+
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__prepend,
+    .form-group .search-dropdown .input-wrapper .input-wrapper__append {
+        position: absolute;
+        background: none;
+        border: none;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0 2px;
+    }
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__prepend span {
+        line-height: 2;
+    }
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__append {
+        font-size: 15px;
+        right: 16px;
+        display: none;
+    }
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__prepend:hover,
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__append:hover {
+        opacity: 0.5;
+    }
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__prepend:hover,
+    .body .form-group .search-dropdown .input-wrapper .input-wrapper__append:focus {
+        outline: none;
+    }
+    .body .form-group .search-results ul.resultServicesList {
+        padding-left: 0;
+        margin-bottom: 5px;
+    }
+    .body .form-group .search-results ul.resultServicesList li.resultService {
+        cursor: pointer;
+        list-style-type: none;
+    }
+    .body .form-group .search-results ul.resultServicesList li.resultService:hover {
+        background-color: #f2f2f2;
+
+    }
+    .body .form-group .search-results ul.resultServicesList li.resultService a {
+        color: #000;
+        text-decoration: none;
+    }
+    .body .component-navbar-private__wrapper {
+        padding-bottom: 90px;
+    }
+
+    .navbar-nav .dropdown-menu {
+        position: absolute !important;
+    }
+
+    .google-login-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 25px;
+        padding: 10px 20px;
+        background-color: grey;
+        color: #fff !important;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: font-size .3s ease-in-out;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    }
+    .google-login-btn:hover {
+        color: #fff !important;
+        text-decoration: none;
+        font-size: 16.5px;
+    }
+    .google-login-btn .fab.fa-google {
+        margin-right: 1rem;
+        background: transparent;
+        color: #fff;
+        -webkit-text-fill-color: #fff;
+    }
+</style>
+
+
+</head>
+
+{% if user['auth'] %}
+
+<body class="body ">
+
+
+<div id="block_257" class="component_private_navbar" style="z-index:5;">
+<span class="component_private_navbar ">
+<div class="component-navbar-private__wrapper">
+<div class="sidebar-block__top component-navbar component-navbar__navbar-private sommerce-editor__component-wrapper">
+<div>
+<nav class="navbar navbar-expand-lg navbar-light">
+<div class="sidebar-block__top-brand">
+<div class="component-navbar-brand component-navbar-public-brand">
+<a class="navbar-brand" href="{{ site['url'] }}">
+{% if site["logo"] %}
+<img style="max-width:45px;" src="{{ site['logo'] }}" alt="" title="">
+{% else %}
+<p style="font-weight:700;">
+{{ site["site_name"] }}
+</p>
+{% endif %}
+</a>
+</div>
+
+
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-257" aria-controls="navbar-collapse-257" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-burger">
+<span class="navbar-burger-line"></span>
+</span>
+</button>
+
+
+<div class="collapse navbar-collapse" style="margin-left:auto;" id="navbar-collapse-257">
+
+
+<div class="component-navbar-collapse-divider"></div>
+
+<div class="d-flex component-navbar-collapse">
+<ul class="navbar-nav navbar-nav-sidebar-menu">
+
+
+{% for page in pagesInformation %}
+
+{% set page_get = page["page_get"] %}
+{% set page_icon = page["page_icon"] %}
+
+<li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+<a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private  {% if isPageActive(" #{page_get}") %}  component-navbar-nav-link-active__navbar-private {% endif %} " href="{{ site['url'] }}/{{page_get}}">
+<span class="component-navbar-nav-link-icon">
+<span class="{{ page_icon }}"></span>
+</span>
+{% set custom_page = page["custom_page"] %}
+{% set page_name = page["page_name"] %}
+{% if custom_page == 1 %}
+{{ lang["#{page_get}.title"] }}
+{% else %}
+{{page_name}}
+{% endif %}
+{% if page_get == "tickets" %}
+{% if ticketCount %}
+<span class="badge">{{ ticketCount }}
+</span>
+{% endif %}
+{% endif %}
+
+</a>
+</li>
+
+
+{% endfor %}
+
+</ul>
+<ul class="navbar-nav">
+
+
+<li class="nav-item d-flex align-items-center component-navbar-nav-item component-navbar-private-nav-item component-navbar-balance-wrap__navbar-private">
+<a class="component-navbar-balance-item__navbar-private">
+{{convert_currency(user["balance"])}}
+</a>
+</li>
+
+
+</ul>
+<ul class="navbar-nav">
+
+
+{% if settings["currency_converter"] == 1 %}
+
+<li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+
+<a id="curr_anchor" class="component-navbar-nav-link  component-navbar-nav-link__navbar-private dropdown-toggle " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">{{ user['user_pref_curr'] }}
+</a>
+
+
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+{% for currency in currencies %}
+
+
+<li>
+<a class="dropdown-item" href="{{ site['url'] }}?user_pref_curr={{currency['currency_name']}}">{{currency['currency_name']}}</a>
+</li>
+
+
+{% endfor %}
+
+</ul>
+
+
+</li>
+
+{% endif %}
+{% if pagesData[13]["page_status_auth"] == 2 %}
+
+<li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+<a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private {% if isPageActive(" account") %}  component-navbar-nav-link-active__navbar-private {% endif %} " href="{{ site['url'] }}/account">
+{{ lang['account.title'] }}</a>
+</li>
+{% endif %}
+<li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+<a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private" href="{{ site['url'] }}/logout">{{ lang['logout.title'] }}</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+</div>
+</div>
+</div>
+</span>
+
+
+<header class="topbar-nav">
+<span class="component_private_sidebar ">
+<div class="component-sidebar_wrapper">
+<div class="sidebar-block__left component-sidebar component-sidebar-with-navbar sommerce-editor__component-wrapper component_private_navbar">
+<div class="component-sidebar__menu-logo">
+<div class="component-navbar-brand component-sidebar__menu-brand">
+<a class="navbar-brand" href="{{ site['url'] }}">
+{% if site["logo"] %}
+<img style="max-width:45px;" src="{{ site['logo'] }}" alt="" title="">
+{% else %}
+<p style="font-weight:700;">
+{{ site["site_name"] }}
+</p>
+{% endif %}
+</a>
+</div>
+</div>
+<ul class="component-sidebar__menu sidebar-block__left-menu">
+
+
+{% for page in pagesInformation %}
+
+{% set page_get = page["page_get"] %}
+{% set page_icon = page["page_icon"] %}
+
+
+<li class="component-sidebar__menu-item   {% if isPageActive(" #{page_get}") %} component-sidebar__menu-item-active  {% endif %}  ">
+<a class="component-sidebar__menu-item-link" href="{{ site['url'] }}/{{page_get}}">
+<span class="sidebar-block__menu-item-icon">
+<span class="{{ page_icon }}"></span>
+</span>
+
+{% set custom_page = page["custom_page"] %}
+{% set page_name = page["page_name"] %}
+{% if custom_page == 1 %}
+{{ lang["#{page_get}.title"] }}
+{% else %}
+{{page_name}}
+{% endif %}
+
+{% if page_get == "tickets" %}
+{% if ticketCount %}
+<span style="background-color:yellow; color:black;" class="badge">{{ ticketCount }}
+</span>
+{% endif %}
+{% endif %}
+
+</a>
+</li>
+
+
+{% endfor %}
+
+
+</ul>
+</div>
+</div>
+</span>
+</body>
+</header>
+
+
+<div class="content-wrapper">
+
+
+{% else %}
+
+
+<body class="body ">
+<div class="wrapper  wrapper-navbar ">
+<div id="block_265">
+<div class="block-wrapper">
+<div class="component_navbar ">
+<div class="component-navbar__wrapper">
+<div class="sidebar-block__top component-navbar component-navbar__navbar-public sommerce-editor__component-wrapper">
+<div>
+<nav class="navbar navbar-expand-lg navbar-light" style="z-index:5;">
+<div class="sidebar-block__top-brand">
+<div class="component-navbar-brand component-navbar-public-brand">
+<p>
+<span style="text-transform: uppercase">
+<span style="letter-spacing: 1.7px">
+<span style="font-size: 24px">
+<a class="navbar-brand" href="{{ site['url'] }}">
+{% if site["logo"] %}
+<img style="max-width:55px;" src="{{ site['logo'] }}" alt="" title="">
+{% else %}
+<p style="font-weight:700;">
+{{ site["site_name"] }}
+</p>
+{% endif %}
+</a>
+</span>
+</span>
+</span>
+</p>
+</div>
+
+{% if site['languages']|length > 1 %}
+<div class="dropdown">
+<a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+{% for lang in site['languages'] %}
+{% if lang['active'] %}
+{{ lang['name'] }}
+{% endif %}
+{% endfor %}
+</a>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+{% for lang in site['languages'] %}
+<li {% if lang['active'] %} selected class="active" {% endif %}>
+<a class="dropdown-item" href="{{ site['url'] }}?lang={{ lang['code'] }}">{{ lang['name'] }}</a>
+</li>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-burger">
+<span class="navbar-burger-line"></span>
+</span>
+</button>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<div class="component-navbar-collapse-divider"></div>
+<div class="d-flex component-navbar-collapse">
+<ul class="navbar-nav">
+
+
+{% for page in pagesInformation %}
+
+{% if page["page_status_non_auth"] == 2 %}
+{% set page_get = page["page_get"] %}
+{% set page_icon = page["page_icon"] %}
+
+
+<li class="nav-item component-navbar-nav-item">
+<a class="component-navbar-nav-link component-navbar-nav-link__navbar-public
+{% if isPageActive(" #{page_get}") %} component-navbar-nav-link__navbar-public component-navbar-nav-link-active__navbar-public {% endif %}" href="{{ site['url'] }}/{{page_get}}">
+<span style="margin-right:4px;" class="{{ page_icon }}"></span>
+
+{% set custom_page = page["custom_page"] %}
+{% set page_name = page["page_name"] %}
+{% if custom_page == 1 %}
+{{ lang["#{page_get}.title"] }}
+{% else %}
+{{page_name}}
+{% endif %}
+
+
+</a>
+</li>
+
+{% endif %}
+{% endfor %}
+
+
+<li></li>
+<li>
+
+
+{% if routess["0"] == "services" %}
+{% if settings["currency_converter"] == 1 %}
+
+<li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+
+<a id="curr_anchor" class="component-navbar-nav-link  component-navbar-nav-link__navbar-private dropdown-toggle " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">{{ guest_pref_curr }}
+</a>
+
+
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+{% for currency in currencies %}
+
+
+<li>
+<a class="dropdown-item" href="{{ site['url'] }}?user_pref_curr={{currency['currency_name']}}">{{currency['currency_name']}}</a>
+</li>
+
+
+{% endfor %}
+
+</ul>
+
+
+</li>
+{% endif %}
+{% endif %}
+</li>
+</ul>
+</div>
+</div>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="component_navbar"></div>
+<div class="component_navbar_sub"></div>
+</div>
+<div class="wrapper-content">
+<div class="wrapper-content__header"></div>
+
+<div class="wrapper-content__body">
+<br />
+<br />
+{% endif %}
+<style>
+.body .modal .modal-content {
+background: #fff;
+color: black;
+}
+
+.modal-header h5 {
+color: black;
+}
+.modal-footer a {
+color: #fff;
+}
+.modal-header {
+border-bottom: none;
+}
+.modal-footer {
+border-top: none;
+}
+</style>
+{# <!-----notification popup---------> #}
+{% for pop in popupNotif %}
+
+
+{% if pop["title"] %}
+
+
+<div class="modal fade" popids="{{ popupNotif["notifIds"] }}" id="notificationModal_{{ loop.index }}" tabindex="-1" aria-labelledby="notificationModalLabel_{{ loop.index }}" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="notificationModalLabel">{{ pop["title"] }}</h5>
+<button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#notificationModal_{{ loop.index+1 }}" aria-label="Close">
+<span aria-hidden="true">×</span>
+</button>
+</div>
+<div class="modal-body">
+{{ pop["description"]|replace({
+"\n": "<br />"
+}) }}
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary btn-actions" style="background:#f55c47;" data-dismiss="modal" data-toggle="modal" data-target="#notificationModal_{{ loop.index+1 }}">Close</button>
+{% if pop["action_link"] %}
+<a href="{{ pop["action_link"] }}" target="_blank" type="button" class="btn btn-actions">
+{% if(pop["action_text"] is empty) %}
+Click Here
+{% else %}
+{{ pop["action_text"] }}
+{% endif %}
+</a>
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}

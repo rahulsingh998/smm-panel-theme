@@ -1,0 +1,42 @@
+{% include 'header.twig' %}
+<br>
+<div id="block_252">
+    <div class="faq ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row">
+                        {% if contentText is not empty %}
+                        <div class="col-lg-12">
+                            <div class="faq-block__card">
+                                <div class="card">
+                                    <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-252-9" aria-expanded="false" aria-controls="#faq-block-252-9">
+                                        <div class="faq-block__header-title">
+                                            <h4>MUST READ IT!</h4>
+                                        </div>
+                                        <div class="faq-block__header-icon">
+                                            <div class="style-text-dark faq-block__icon" style></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="faq-block__body collapse" id="faq-block-252-9">
+                                        <div class="faq-block__body-description" style="padding-top: 8px">
+                                            <br>
+                                            {{ contentText }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% include 'footer.twig' %}

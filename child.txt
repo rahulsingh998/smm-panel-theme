@@ -1,0 +1,237 @@
+{% include 'header.twig' %}
+
+<div class="wrapper-content__body">
+
+
+    <div id="block_252">
+        <div class="faq ">
+            <div class="bg"></div>
+            <div class="divider-top"></div>
+            <div class="divider-bottom"></div>
+            {% if contentText is not empty %}
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="faq-block__card">
+                                    <div class="card">
+                                        <div class="faq-block__body " id="faq-block-252-5">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                {{ contentText }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="wrapper-content__body">
+
+                <div class="new_order-block ">
+                    <div class="container-fluid col-lg-8" style=" margin-left: auto;">
+                        <div class="row new-order-form">
+                            <div class="col-lg-12">
+                                <div class="component_form_group component_card component_radio_button">
+                                    <div class="card ">
+
+                                        {% if error %}
+                                        <div class="alert alert-dismissible alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            {{ errorText }}
+                                        </div>
+                                        {% endif %}
+
+                                        {% if data["childpanel"]["success"] == 1 %}
+                                        <div class="alert alert-dismissible alert-success">
+                                            <strong>
+                                                Order Id:
+                                            </strong>
+                                            {{ data['childpanel']['id'] }}
+                                            <br>
+                                            <strong>
+                                                Service:
+                                            </strong>
+                                            {{ data['childpanel']['service'] }}
+                                            <br>
+                                            <strong>
+                                                Domain:
+                                            </strong>
+                                            {{ data['childpanel']['link'] }}
+                                            <br>
+                                            <strong>
+                                                Quantity:
+                                            </strong>
+                                            {{ data['childpanel']['quantity'] }}
+                                            <br>
+                                            <strong>
+                                                Charge:
+                                            </strong>
+                                            {{ data['childpanel']['price'] }}
+                                            <br>
+                                        </div>
+                                        {% endif %}
+
+                                        {% if data["childpanel"]["success"] == 2 %}
+                                        <div class="alert alert-dismissible alert-success">
+                                            <strong>
+                                                Order Id:
+                                            </strong>
+                                            {{ data['childpanel']['id'] }}
+                                            <br>
+                                            <strong>
+                                                Child Panel Renewed Successfully</strong>
+                                        </div>
+                                        {% endif %}
+
+                                        <div class="well ">
+                                            <br>
+                                            <br>
+                                            <div class="button-bar">
+                                                <button id="tab-add-btn" onclick="payment()" class="btn btn-actions">{{lang["childpanel.order.button"]}}</button>
+                                                <button id="tab-history-btn" onclick="detail()" class="btn btn-actions">{{lang["childpanel.histoy.button"]}}</button>
+                                            </div>
+                                            <br />
+                                        <br />
+                                    <div class="col-lg-12 tab-content" id="tab-add">
+                                        <form action="{{site["url"]}}/child-panel" method="post">
+                                            <div class="form-group">
+                                                <label for="Domain">{{lang["childpanel.domain"]}}</label>
+                                                <input type="text" class="form-control" name="domain" placeholder="Domain" required>
+                                            </div>
+                                            <br>
+                                            <div class="alert alert-danger " id="orderNote">
+                                                <p class="help-block" style="margin-bottom: 5px">
+                                                    {{lang["childpanel.nameserver.message"]}}
+                                                </p>
+                                                <ul style=" padding-left: 20px">
+                                                    <li>{{ settings['ns1'] }}</li>
+                                                    <li>{{ settings['ns2'] }}</li>
+                                                </ul>
+                                            </div>
+
+                                            <br>
+                                            <div class="form-group">
+
+                                                <label class="Domain" for="currency">{{lang["childpanel.currency"]}}</label>
+
+                                                <select class="form-control" name="currency" required>
+                                                    {% for currencyCode, data in currenciesDataforChild %}
+                                                    <option value="{{currencyCode}}">{{data["name"]}}
+                                                        -
+                                                        {{data["code"]}}
+                                                        -
+                                                        {{data["symbol"]}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">{{lang["childpanel.username"]}}</label>
+                                                <input type="text" class="form-control" name="username" placeholder="Username" required>
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <label class="control-label" for="orderpanelform-password">{{lang["childpanel.password"]}}</label><input type="password" class="form-control" name="password" placeholder="Password" required>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label class="control-label" for="orderpanelform-password">{{lang["childpanel.confirm_password"]}}</label><input type="password" class="form-control" name="password_confirm" placeholder="Password" required>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="charge" class="control-label">{{ lang["neworder.charge"] }}</label>
+                                                <input type="text" class="form-control" value="{{convert_currency(settings['childpanel_price'])}}" readonly>
+                                            </div>
+                                            <input type="hidden" name="crsf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-block btn-big-primary" name="submit" value="Submit" id="submit_form">{{lang["childpanel.place_order"]}}</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-12 tab-content" id="tab-history" style="display: none;">
+                                        <div class="">
+                                            <div class="">
+
+                                                <div class="">
+                                                    <div class="table-responsive custom-table">
+                                                        <table class="table ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>{{lang["childpanel.id"]}}</th>
+                                                                    <th>{{lang["childpanel.domain"]}}</th>
+                                                                    <th>{{lang["childpanel.currency"]}}</th>
+                                                                    <th class="width-40">{{lang["childpanel.username"]}}</th>
+                                                                    <th class="nowrap">{{lang["childpanel.status"]}}</th>
+                                                                    <th class="nowrap">{{lang["childpanel.created"]}}</th>
+                                                                    <th class="nowrap">{{lang["childpanel.last.renewed"]}}</th>
+                                                                    <th class="nowrap">{{lang["childpanel.action"]}}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                {% for logs in chilpanel_logs %}
+                                                                <tr>
+                                                                    <td>{{ logs['id'] }}</td>
+                                                                    <td>{{ logs['domain'] }}</td>
+                                                                    <td>{{ logs['currency'] }}</td>
+                                                                    <td class="width-40">{{ logs['child_username'] }}</td>
+                                                                    <td class="nowrap">{{ logs['status']|capitalize }}</td>
+                                                                    <td class="nowrap">{{ show_date(logs['created_at']) }}</td>
+                                                                    <td class="nowrap">{{ show_date(logs['last_renew']) }}</td>
+                                                                    <td class="nowrap">
+                                                                        {% if logs['status'] == "terminated" %}
+                                                                        <a href="{{site["url"]}}/child-panel/renew/{{ logs['id'] }}">
+                                                                            <button class="btn btn-actions">Renew</button>
+                                                                        </a>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="response_msg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function detail() {
+        document.getElementById('tab-add').style.display = 'none';
+        document.getElementById('tab-add-btn').className = 'btn btn-secondary btn-actions tab-head';
+        document.getElementById('tab-history').style.display = 'block';
+        document.getElementById('tab-history-btn').className = 'btn btn-actions  tab-head ml-2';
+    }
+
+    function payment() {
+        document.getElementById('tab-history').style.display = 'none';
+        document.getElementById('tab-history-btn').className = 'btn btn-secondary btn-actions tab-head ml-2';
+        document.getElementById('tab-add').style.display = 'block';
+        document.getElementById('tab-add-btn').className = 'btn btn-actions tab-head';
+    }
+</script>
+
+
+{% include 'footer.twig' %}

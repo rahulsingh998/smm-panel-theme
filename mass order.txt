@@ -1,0 +1,172 @@
+{% include 'header.twig' %}
+<br>
+<div class="wrapper-content__header"></div>
+<div
+    class="wrapper-content__body">
+    <!-- Main variables *content* -->
+    <div id="block_16" class="container-fluid col-lg-8" style=" margin:0 auto;">
+        {% if contentText is not empty %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="faq-block__card">
+                                <div class="card">
+                                    <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-252-4" aria-expanded="false" aria-controls="#faq-block-252-4">
+                                        <div class="faq-block__header-title">
+                                            <h4>
+                                                {{ lang["massorder.information"] }}</h4>
+                                        </div>
+                                        <div class="faq-block__header-icon">
+                                            <div class="style-text-dark faq-block__icon" style></div>
+                                        </div>
+                                    </div>
+                                    <div class="faq-block__body collapse" id="faq-block-252-4">
+                                        <div class="faq-block__body-description" style="padding-top: 8px">
+                                            {{ contentText }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+        {% if errorLogsStatus == 1 %}
+        <br>
+
+        <div id="block_16">
+            <div class="ticket-form">
+                <div class="bg"></div>
+                <div class="divider-top"></div>
+                <div class="divider-bottom"></div>
+                <div class="container-fluid">
+                    <div class="row ticket-form__alignment">
+                        <div class="col-lg-12">
+                            <div class="component_card">
+                                <div class="card">
+
+
+                                    <div class="well" style="overflow:auto;">
+                                        <table class="table ">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ lang['massorder.table.id'] }}</th>
+                                                    <th>{{ lang['massorder.table.orderId'] }}</th>
+                                                    <th>{{ lang['massorder.table.link'] }}</th>
+                                                    <th>{{ lang['massorder.table.service'] }}</th>
+                                                    <th>{{ lang['massorder.table.amount'] }}</th>
+                                                    <th>{{ lang['massorder.table.quantity'] }}</th>
+                                                    <th>{{ lang['massorder.table.message'] }}</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for log in ordersLogs %}
+
+                                                {% if log["message"] != "Order got successfull!" %}
+                                                <tr>
+
+                                                    <td>{{ loop.index }}</td>
+                                                    <td>
+                                                        -
+                                                    </td>
+                                                    <td>
+                                                        -
+                                                    </td>
+                                                    <td>
+                                                        -
+                                                    </td>
+                                                    <td>
+                                                        -
+                                                    </td>
+                                                    <td>
+                                                        -
+                                                    </td>
+                                                    <td>{{log["message"]}}</td>
+                                                </tr>
+                                            </td>
+                                        </tr>
+
+                                        {% else %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{log["order_details"]["id"] }}</td>
+                                            <td>{{log["order_details"]["link"] }}</td>
+                                            <td>{{log["order_details"]["service"] }}</td>
+                                            <td>
+
+
+                                                {{convert_currency(log["order_details"]["price"])}}
+                                            </td>
+                                            <td>{{log["order_details"]["quantity"] }}</td>
+                                            <td>{{log["message"]}}</td>
+
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}<br><div class="ticket-form">
+<div class="bg"></div>
+<div class="divider-top"></div>
+<div class="divider-bottom"></div>
+<div class="container-fluid">
+<div class="row ticket-form__alignment">
+<div class="col-lg-12">
+
+<div class="component_card">
+<div class="card">
+
+
+{% if error %}
+<div class="alert alert-dismissible alert-danger">
+{{ errorText }}
+</div>
+{% endif %}
+<div class="col-md-12">
+
+
+<form method="post" action="">
+<div class="component_form_group">
+<div class="">
+<div class="form-group">
+<label for="links" class="control-label">{{lang["massorder.instruction"]}}</label>
+<textarea class="form-control" name="massorders" rows="15" id="links" placeholder="service_id | link | quantity"></textarea>
+</div>
+</div>
+</div>
+<input type="hidden" name="crsf_token" value="{{ csrf_token() }}">
+<div class="component_button_submit">
+<div class="">
+<button type="submit" class="btn btn-block btn-big-primary">{{lang["massorder.submit"]}}</button>
+</div>
+</div>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<br><br>{% include 'footer.twig' %}

@@ -1,0 +1,272 @@
+{% include 'header.twig' %}
+
+<style>
+
+    {% if settings["site_theme_alt"] == "Classic_Black" %}
+
+
+    #service_description,
+    #service_avg_time {
+        padding: 13px;
+        border-radius: 10px;
+        color: #fff;
+        box-shadow: 1px 1px 1px #252427;
+        background-color: #252427;
+    }
+
+    {% elseif settings["site_theme_alt"] == "Coral_Perfect" %}
+
+    #service_description,
+    #service_avg_time {
+        padding: 13px;
+        border-radius: 10px;
+        color: #393e46;
+        box-shadow: 1px 1px 1px #ffc2b4;
+        background-color: #FFF5F4;
+    }
+    {% elseif settings["site_theme_alt"] == "Mix_Lime" %}
+
+    #service_description,
+    #service_avg_time {
+        padding: 13px;
+        border-radius: 10px;
+        color: #393e46;
+        box-shadow: 1px 1px 1px #d1d9d9;
+        background-color: #EFF7F0;
+    }
+    {% elseif settings["site_theme_alt"] == "Orange_Perfect" %}
+
+    #service_description,
+    #service_avg_time {
+        padding: 13px;
+        border-radius: 10px;
+        color: #393e46;
+        box-shadow: 1px 1px 1px #ffb26b;
+        background-color: #FFF4ED;
+    }
+    {% elseif settings["site_theme_alt"] == "Sharp_Red" %}
+
+    #service_description,
+    #service_avg_time {
+        padding: 13px;
+        border-radius: 10px;
+        color: #3f3f44;
+        box-shadow: 1px 1px 1px #FFFFFF;
+        background-color: #FBF1F2;
+    }
+
+    {% elseif settings["site_theme_alt"] == "Elegent_Blue" %}
+    #service_description,
+    #service_avg_time {
+        padding: 13px;
+        border-radius: 10px;
+        color: #393e46;
+        box-shadow: 1px 1px 1px #7296b2;
+        background-color: #F1F7FC;
+    }
+    {% else %}
+
+    {% endif %}
+
+
+</style>
+
+
+<div class="wrapper-content__body">
+
+
+    <div id="block_252">
+        <div class="faq ">
+            <div class="bg"></div>
+            <div class="divider-top"></div>
+            <div class="divider-bottom"></div>
+
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-252-5" aria-expanded="false" aria-controls="#faq-block-252-4">
+                                            <div class="faq-block__header-title">
+                                                <h4>{{ lang['addfunds.infromation'] }}</h4>
+                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-252-5">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                {{ contentText }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="wrapper-content__body">
+
+                <div class="new_order-block ">
+                    <div class="container-fluid col-lg-8" style=" margin-left: auto;">
+                        <div class="row new-order-form">
+                            <div class="col-lg-12">
+                                <div class="component_form_group component_card component_radio_button">
+                                    <div class="card ">
+
+
+                                        {% if error %}
+                                        <div class="alert alert-dismissible alert-danger">
+                                            {{ errorText }}
+                                        </div>
+                                        {% endif %}
+
+                                        {% if data["order"]["success"] == 1 %}
+                                        <div class="alert alert-dismissible alert-success">
+                                            <strong>
+                                                {{ lang["neworder.success.id"] }}:
+                                            </strong>
+                                            {{ data['order']['id'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.service"] }}:
+                                            </strong>
+                                            {{ data['order']['service'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.link"] }}:
+                                            </strong>
+                                            {{ data['order']['link'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.quantity"] }}:
+                                            </strong>
+                                            {{ data['order']['quantity'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.charge"] }}:
+                                            </strong>
+
+                                            {{convert_currency(data['order']['price'])}}
+
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.balance"] }}:
+                                            </strong>
+
+                                            {{convert_currency(data['order']['balance'])}}
+                                            <br>
+                                        </div>
+                                        {% endif %}
+                                        {% if data["order"]["success"] == 2 %}
+                                        <div class="alert alert-dismissible alert-success">
+                                            <strong>
+                                                {{ lang["neworder.success.id"] }}:
+                                            </strong>
+                                            {{ data['order']['id'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.service"] }}:
+                                            </strong>
+                                            {{ data['order']['service'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.username"] }}:
+                                            </strong>
+                                            {{ data['order']['link'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.quantity"] }}:
+                                            </strong>
+                                            {{ data['order']['min'] }}
+                                            -
+                                            {{ data['order']['max'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.posts"] }}:
+                                            </strong>
+                                            {{ data['order']['posts'] }}
+                                            <br>
+                                            <strong>
+                                                {{ lang["neworder.success.delay"] }}:
+                                            </strong>
+                                            {{ data['order']['delay'] }}
+                                            <br>
+                                        </div>
+                                        {% endif %}
+
+                                        <div class="well">
+
+                                            <form method="post" action="">
+                                                <div class="component_button_forms">
+                                                    {% if site["modules"]["search_services"] %}
+                                                    <div class="form-group">
+                                                        <div class="search-dropdown" id="new-order-search" style="position: relative;" data-lang-placeholder="Search">
+                                                            <div class="input-wrapper" style="position: relative;">
+                                                                <button type="button" id="searchServicesButtonIcon" class="input-wrapper__prepend">
+                                                                    <span class="icon style-text-primary">
+                                                                        <i class="fas fa-search"></i>
+                                                                    </span>
+                                                                </button>
+                                                                <input type="text" class="form-control" id="searchServicesInputField" placeholder="Search Services...">
+                                                                <button type="button" class="input-wrapper__append" id="searchServicesInputClearButton">
+                                                                    <span class="fas fa-times"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="select2-dropdown search-results" id="searchServicesResultsDropdown" style="display: none;"></div>
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="form-group">
+                                                        <label for="orderform-category" class="control-label">{{ lang["neworder.category"] }}</label>
+                                                        <select class="form-control" id="neworder_category" name="categories">
+                                                            {% for category in categories %}
+                                                            <option data-icon="{{category["category_icon"]["icon"]}}" data-icon-type="{{category["category_icon"]["iconType"]}}" value="{{ category["category_id"] }}" {% if category["category_id"] == data['categories'] %} selected {% endif %}>{{ category["category_name"] }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="orderform-service" class="control-label">{{ lang["neworder.service"] }}</label>
+
+                                                        <select class="form-control" id="neworder_services" name="services"></select>
+                                                    </div>
+
+                                                    <div id="neworder_fields"></div>
+
+                                                    <div class="form-group" id="charge_div">
+                                                        <label for="charge" class="control-label">{{ lang["neworder.charge"] }}</label>
+                                                        <input type="text" class="form-control" id="charge" readonly>
+                                                    </div>
+
+                                                    <input type="hidden" name="crsf_token" value="{{ csrf_token() }}">
+                                                    <button id="neworderbutton" onclick="submitPoll()" type="submit" class="btn btn-big-primary">{{ lang["neworder.button"] }}</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% include 'footer.twig' %}
+            <script>
+                function submitPoll() {
+                    setTimeout(function () {
+                        document.getElementById("neworderbutton").disabled = true;
+                    }, 200);
+                    setTimeout(function () {
+                        document.getElementById("neworderbutton").disabled = false;
+                    }, 5000);
+                }
+                document.getElementById("neworderbutton").addEventListener("click", submitPoll);
+            </script>

@@ -1,0 +1,247 @@
+{% include 'header.twig' %}
+<div id="block_252">
+    <div class="faq ">
+
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        {% if contentText is not empty %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="faq-block__card">
+                                <div class="card">
+                                    <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-252-4" aria-expanded="false" aria-controls="#faq-block-252-4">
+                                        <div class="faq-block__header-title">
+                                            <h4>{{ lang['addfunds.infromation'] }}</h4>
+                                        </div>
+                                        <div class="faq-block__header-icon">
+                                            <div class="style-text-dark faq-block__icon" style></div>
+                                        </div>
+                                    </div>
+                                    <div class="faq-block__body collapse" id="faq-block-252-4">
+                                        <div class="faq-block__body-description" style="padding-top: 8px">
+                                            {{ contentText }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="wrapper-content__header"></div>
+        <div
+            class="wrapper-content__body">
+            <!-- Main variables *content* -->
+            <div id="block_20 " class="container-fluid col-lg-8" style=" margin:0 auto;">
+                <div class="add-funds__form">
+                    <div class="container-fluid">
+                        <div class="row add-funds__form-alignment">
+                            <div class="col-lg-12">
+                                <div class="component_card">
+                                    <div class="card">
+                                        <div class="col-md-12">
+                                            {% if error %}
+                                            <div class="alert alert-dismissible alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                {{ errorText }}
+                                            </div>
+                                            <br />
+                                        {% endif %}
+                                        {% if success %}
+                                        <div class="alert alert-dismissible alert-success">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            {{ successText }}
+                                        </div>
+                                        <br />
+                                    {% endif %}
+                                </div>
+                                <p style="text-align: center;">
+                                    <span style="font-weight: 700; font-size: 36px;">
+                                        {{ lang['addfunds.online.title'] }}
+                                    </span>
+                                </p>
+                                {% if paymentsList %}
+                                <form method="post" action="addfunds">
+                                    <div class="form-group">
+                                        <label for="method" class="control-label">{{ lang['addfunds.method'] }}</label>
+                                        <select class="form-control" id="payment_method_new" name="payment_type">
+                                            {% for payment in paymentsList %}
+                                            <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %}>{{ payment['method_name'] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div id="amount_field" class="form-group"></div>
+                                    <input type="hidden" name="crsf_token" value="{{ csrf_token() }}">
+                                    <div id="button_field" class="form-group"></div>
+                                </form>
+                                {% else %}
+                                <div class="form-group">
+                                    <label for="method" class="control-label">{{ lang['addfunds.method'] }}</label>
+                                    <select disabled class="form-control" id="payment_method_new" name="payment_type">
+                                        <option>No payment methods found!</option>
+                                    </select>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </br>
+            {% if settings["coupon_system"] == 2 %}
+            <div class="wrapper-content__header"></div>
+            <div
+                class="wrapper-content__body">
+                <!-- Main variables *content* -->
+                <div id="block_20">
+                    <div class="add-funds__form">
+                        <div class="bg"></div>
+                        <div class="divider-top"></div>
+                        <div class="divider-bottom"></div>
+                        <div class="container-fluid">
+                            <div class="row add-funds__form-alignment">
+                                <div class="col-lg-12">
+                                    <div class="component_card">
+                                        <div class="card">
+                                            <div class="col-md-12">
+                                                <div class="well">
+                                                    <form method="post" action="kupon">
+                                                        <div class="form-group">
+                                                            <label for="subject" class="control-label">{{lang["addfunds.coupon.label"]}}</label>
+                                                            <input type="text" class="form-control" id="kuponadi" name="kuponadi">
+                                                        </div>
+                                                        <input type="hidden" name="crsf_token" value="{{ csrf_token() }}">
+                                                        <button type="submit" class="btn btn-block btn-big-primary">{{lang["addfunds.coupon.button.text"]}}</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <br>
+        <div class="wrapper-content__body">
+            <div id="block_20">
+                <div class="add-funds__form">
+                    <div class="bg"></div>
+                    <div class="divider-top"></div>
+                    <div class="divider-bottom"></div>
+                    <div class="container-fluid">
+                        <div class="row add-funds__form-alignment">
+                            <div class="col-md-12">
+                                <div class="card" style="padding:0;">
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{lang["addfunds.transaction.id"]}}</th>
+                                                            <th>{{ lang["addfunds.transaction.amount"] }}</th>
+                                                            <th class="width-40">{{ lang["addfunds.transaction.method"] }}</th>
+                                                            <th>{{ lang["addfunds.transaction.date"] }}</th>
+                                                            <th class="nowrap">{{ lang["addfunds.transaction.transId"] }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for transaction in transactions %}
+                                                        <tr>
+                                                            <td>{{ transaction['payment_id'] }}</td>
+                                                            <td>
+                                                                {{ convert_currency(transaction['payment_amount'])}}
+                                                            </td>
+                                                            <td class="width-40">{{ transaction['method_name'] }}</td>
+                                                            <td>{{ show_date(transaction['payment_create_date']) }}</td>
+                                                            <td class="nowrap">{{ transaction['payment_extra'] }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                        {% if pagination["count"] > 1 %}
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <nav class="component_pagination">
+                                                    <div class="">
+                                                        <ul class="pagination">
+
+                                                            {% if pagination["current"] != 1 %}
+                                                            <li>
+                                                                <a href="addfunds/{{ pagination[" previous"] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Previous">
+                                                                    <span aria-hidden="true">«</span>
+                                                                </a>
+                                                            </li>
+                                                            {% endif %}
+
+                                                            {% set r, l = 3, 3 %}
+
+                                                            {% if pagination['current'] == 1 %}
+                                                            {% set r = 7 %}
+                                                            {% endif %}
+
+                                                            {% if pagination['current'] == 2 %}
+                                                            {% set r = 5 %}
+                                                            {% endif %}
+
+                                                            {% if pagination['current'] >= pagination['count'] %}
+                                                            {% set l = 5 %}
+                                                            {% endif %}
+
+                                                            {% for page in 1..pagination["count"] %}
+                                                            {% if page >= (pagination['current']-l) and page <= (pagination['current']+r) %}
+                                                            <li class="page-item pagination-item  {% if page == pagination['current'] %} pagination-item__active {% endif %} ">
+                                                                <a href="addfunds/{{ page }}{% if search %}?search={{ search }}{% endif %}" class="page-link pagination-link">{{ page }}</a>
+                                                            </li>
+                                                            {%endif%}
+                                                            {% endfor %}
+
+                                                            {% if pagination['current'] < pagination['count'] %}
+                                                            <li>
+                                                                <a href="addfunds/{{ pagination['next'] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Next">
+                                                                    <span aria-hidden="true">»</span>
+                                                                </a>
+                                                            </li>
+                                                            {% endif %}
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </nav>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display:none;" id="loadderr" class="container">
+            <div class="row">
+                <div id="loading">
+                    <img id="loading-image" src="{{ site['url'] }}/public/ajax-loading.gif" alt="Loading..." />
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+{% include 'footer.twig' %}

@@ -1,0 +1,151 @@
+{% include 'header.twig' %}
+
+<br>
+<div class="wrapper-content__header"></div>
+<div
+    class="wrapper-content__body">
+    <!-- Main variables *content* -->
+    <div id="block_22" class="container-fluid col-lg-8" style=" margin:0 auto;">
+        <div class="orders-history ">
+            <div class="bg"></div>
+            <div class="divider-top"></div>
+            <div class="divider-bottom"></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <div class="orders-history__margin-tab">
+                            <div class="component_status_tabs">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="orders-history__margin-search component_card">
+                                                <div class="card">
+                                                    <div class="component_form_group component_button_search">
+                                                        <div class="">
+                                                            <form action="" method="get" id="history-search">
+                                                                <div class="input-group">
+                                                                    <input type="text" name="search" class="form-control" value="{{ search }}" placeholder="Search refill by order id">
+                                                                    <div class="input-group-append">
+                                                                        <button class="btn btn-big-secondary" type="submit">
+                                                                            <span class="fas fa-search"></span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="orders-history__margin-table">
+                                                <div class="table-bg component_table ">
+                                                    <div class="table-wr table-responsive">
+                                                        <table class="table ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>{{lang["refill.table.id"]}}</th>
+                                                                    <th>{{lang["refill.table.order"]}}</th>
+                                                                    <th>{{lang["refill.table.link"]}}</th>
+                                                                    <th>{{lang["refill.table.start.count"]}}</th>
+                                                                    <th>{{lang["refill.table.quantity"]}}</th>
+                                                                    <th>{{lang["refill.table.date"]}}</th>
+                                                                    <th>{{lang["refill.table.status"]}}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                {% for order in orders %}
+                                                                <tr>
+                                                                    <td>
+                                                                        {{ order['task_id'] }}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <a href="{{site['url']}}/orders/?search={{order['order_id']}}">{{ order['order_id'] }}</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a target="_blank" href="{{ order['order_link'] }}">{{ order['order_link'] }}</a>
+                                                                    </td>
+
+                                                                    <td>{{ order['order_start'] }}</td>
+                                                                    <td>{{ order['order_quantity'] }}</td>
+                                                                    <td>{{ show_date(order['createdAtFormatted']) }}</td>
+                                                                    <td>
+                                                                        <div style="cursor:pointer; padding:3px 5px;  text-align:center; border-radius:20px; color:white; background:{{ refill_status_color(order['task_status'])}}">
+                                                                            {{ order['task_status']|capitalize }}
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <br>
+                                                    {% if pagination["count"] > 1 %}
+                                                    <ul class="pagination">
+
+                                                        {% if pagination["current"] == 1 %}
+                                                        <li>
+                                                            <a href="refill/{{ status }}/{{ pagination[" previous"] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Previous">
+                                                                <span aria-hidden="true">«</span>
+                                                            </a>
+                                                        </li>
+                                                        {% endif %}
+
+                                                        {% set r, l = 3, 3 %}
+
+                                                        {% if pagination['current'] == 1 %}
+                                                        {% set r = 7 %}
+                                                        {% endif %}
+
+                                                        {% if pagination['current'] == 2 %}
+                                                        {% set r = 5 %}
+                                                        {% endif %}
+
+                                                        {% if pagination['current'] >= pagination['count'] %}
+                                                        {% set l = 5 %}
+                                                        {% endif %}
+
+                                                        {% for page in 1..pagination["count"] %}
+                                                        {% if page >= (pagination['current']-l) and page <= (pagination['current']+r) %}
+                                                        <div style="border:1px solid rgb(128,128,128); padding:4px; margin-left:8px; min-width:21px; text-align:center;">
+                                                            <li {% if page == pagination['current'] %} class="active" {%endif%}>
+                                                                <a href="refill/{{ status }}/{{ page }}{% if search %}?search={{ search }}{% endif %}">{{ page }}</a>
+                                                            </li>
+                                                        </div>
+                                                        {%endif%}
+                                                        {% endfor %}
+
+                                                        {% if pagination['current'] < pagination['count'] %}
+                                                        <li>
+                                                            <a style="margin-left:8px;" href="refill/{{ status }}/{{ pagination['next'] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Next">
+                                                                <span aria-hidden="true">»</span>
+                                                            </a>
+                                                        </li>
+                                                        {% endif %}
+
+                                                    </ul>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br><br><br><br><br>
+{% include 'footer.twig' %}
